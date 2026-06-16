@@ -1,9 +1,12 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ExibeContatos } 
+from "./exibe-contatos/exibe-contatos";
+import { AdicionaContato } 
+from "./adiciona-contato/adiciona-contato";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [ExibeContatos, AdicionaContato],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
