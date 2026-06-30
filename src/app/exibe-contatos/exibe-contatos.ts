@@ -10,11 +10,15 @@ import { DatePipe } from '@angular/common';
   styleUrl: './exibe-contatos.scss',
 })
 export class ExibeContatos {
-    #agendaService = inject(AgendaService)  
 
-    constructor() { }
+  #agendaService = inject(AgendaService);
 
-    obterContatos() {
-      return this.#agendaService.obterTodos()
-    }
+  obterContatos() {
+    return this.#agendaService.obterTodos();
+  }
+
+  remover(contato: Contato) {
+    this.#agendaService.remover(contato);
+  }
+
 }

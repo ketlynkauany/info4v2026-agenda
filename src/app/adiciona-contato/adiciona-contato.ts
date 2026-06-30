@@ -1,7 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { AgendaService } from '../model/agenda-service';
 import { TipoContato } from '../model/contato';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 
 @Component({
   selector: 'app-adiciona-contato',
@@ -10,19 +15,49 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './adiciona-contato.scss',
 })
 export class AdicionaContato {
-  #agendaService = inject(AgendaService)  
-  #fb = inject(FormBuilder)
+
+  #agendaService = inject(AgendaService);
+  #fb = inject(FormBuilder);
+
   protected formContato: FormGroup;
+
   constructor() {
     this.formContato = this.#fb.group({
       nome: [''],
-      aniversario: [new Date()],
       telefone: [''],
-      tipo: TipoContato.AMIGO
-    })
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^[a-zA-Z0-9._%+-]+@gmail\\.com$')
+        ]
+      ],
+      aniversario: [new Date()],
+      tipo: [TipoContato.AMIGO]
+    });
   }
+
   adicionar() {
-    const contato = this.formContato.value
-    if (contato) { this.#agendaService.adicionar(contato) }
+
+    if (this.formContato.invalid) {
+      alert('Digite um e-mail válido (@gmail.com).');
+      return;
+    }
+
+    const contato = this.formContato.value;
+
+    if (this.#agendaService.adicionar(contato)) {
+
+      this.formContato.reset({
+        nome: '',
+        telefone: '',
+        email: '',
+        aniversario: new Date(),
+        tipo: TipoContato.AMIGO
+      });
+
+    } else {
+      alert('Já existe um contato com esse e-mail.');
+    }
   }
 }

@@ -8,23 +8,38 @@ export class AgendaService {
   readonly #contatos: Contato[];
 
   constructor() {
-    this.#contatos = []
+    this.#contatos = [];
   }
 
-  /** Adiciona um novo contato na agenda 
-   * @param cc o contato a ser adicionado
-   * @return true se o contato foi adicionado, false caso contrário.
-  */
-  adicionar(cc: Contato): boolean {
-    if (cc) {
-      this.#contatos.push(cc)
-      return true
+  // Verifica se o contato já existe
+  existe(c: Contato): boolean {
+    return this.#contatos.find(contato => contato.email === c.email) !== undefined;
+  }
+
+  // Adiciona um contato
+  adicionar(c: Contato): boolean {
+    if (!c || this.existe(c)) {
+      return false;
     }
-    return false
+
+    this.#contatos.push(c);
+    return true;
   }
 
-  /** Devolve todos os contatos da agenda */
+  // Remove um contato
+  remover(c: Contato): boolean {
+    const indice = this.#contatos.indexOf(c);
+
+    if (indice === -1) {
+      return false;
+    }
+
+    this.#contatos.splice(indice, 1);
+    return true;
+  }
+
+  // Retorna todos os contatos
   obterTodos(): Contato[] {
-    return [...this.#contatos]
+    return [...this.#contatos];
   }
 }

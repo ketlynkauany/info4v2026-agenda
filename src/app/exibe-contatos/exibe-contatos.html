@@ -1,8 +1,37 @@
-<ul>
-@for (cc of obterContatos(); track cc.email) {
-    <li>{{cc.nome}} - 
-        {{cc.aniversario | date: 'dd/MM/yyyy'}} - 
-        {{cc.tipo}}
-    </li>
-}
-</ul>
+<div class="card-lista">
+
+    <h2> Contatos Cadastrados</h2>
+
+    @if (obterContatos().length === 0) {
+
+        <p class="vazio">Nenhum contato cadastrado.</p>
+
+    } @else {
+
+        @for (cc of obterContatos(); track cc.email) {
+
+            <div class="contato">
+
+                <div class="dados">
+                    <h3>{{ cc.nome }}</h3>
+
+                    <p>📞 {{ cc.telefone }}</p>
+
+                    <p>📧 {{ cc.email }}</p>
+
+                    <p>🎂 {{ cc.aniversario | date:'dd/MM/yyyy' }}</p>
+
+                    <span>{{ cc.tipo }}</span>
+                </div>
+
+                <button (click)="remover(cc)">
+                    Remover
+                </button>
+
+            </div>
+
+        }
+
+    }
+
+</div>

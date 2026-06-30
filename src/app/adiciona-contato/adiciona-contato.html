@@ -1,11 +1,53 @@
-<form [formGroup]="formContato">
-    <div>
-        <label for="nome">Nome</label>
-        <input type="text" name="nome" id="nome" 
-        formControlName="nome">
-    </div>
-    <div>
-        <input type="button" value="Adicionar" 
-               (click)="adicionar()">
-    </div>
-</form>
+<div class="card">
+
+    <h2>Novo Contato</h2>
+
+    <form [formGroup]="formContato">
+
+        <label>Nome</label>
+        <input
+            type="text"
+            formControlName="nome">
+
+        <label>Telefone</label>
+        <input
+            type="text"
+            formControlName="telefone">
+
+        <label>E-mail</label>
+        <input
+            type="email"
+            formControlName="email">
+
+        @if (formContato.get('email')?.invalid &&
+             formContato.get('email')?.touched) {
+
+            <small class="erro">
+                Digite um e-mail válido (@gmail.com)
+            </small>
+
+        }
+
+        <label>Aniversário</label>
+        <input
+            type="date"
+            formControlName="aniversario">
+
+        <label>Tipo</label>
+        <select formControlName="tipo">
+            <option value="Amigo(a)">Amigo(a)</option>
+            <option value="Família">Família</option>
+            <option value="IFRN">IFRN</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Outros">Outros</option>
+        </select>
+
+        <button
+            type="button"
+            (click)="adicionar()">
+            Adicionar Contato
+        </button>
+
+    </form>
+
+</div>
